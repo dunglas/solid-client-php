@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Login using your WebID{% endblock %}
+
+{% block body %}
+    <h1>Login using your WebID</h1>
+
+    {% if error %}
+        <div class="alert alert-danger" role="alert">{{ error }}</div>
+    {% endif %}
+
+    {{ form(form) }}
+{% endblock %}

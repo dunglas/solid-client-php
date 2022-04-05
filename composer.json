@@ -1,0 +1,40 @@
+{
+    "name": "dunglas/solid-client-php",
+    "description": "Solid client implementation for PHP",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Dunglas\\PhpSolidClient\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Kévin Dunglas",
+            "email": "kevin@dunglas.fr"
+        }
+    ],
+    "require": {
+        "php": ">=8.1",
+        "jumbojett/openid-connect-php": "dev-master",
+        "symfony/http-client": "^6.0",
+        "easyrdf/easyrdf": "^1.1",
+        "ml/json-ld": "^1.2",
+        "web-token/jwt-core": "^3.0",
+        "web-token/jwt-key-mgmt": "^3.0",
+        "web-token/jwt-signature": "^3.0",
+        "web-token/jwt-checker": "^3.0",
+        "web-token/jwt-signature-algorithm-hmac": "^3.0",
+        "web-token/jwt-signature-algorithm-ecdsa": "^3.0",
+        "web-token/jwt-signature-algorithm-rsa": "^3.0"
+    },
+    "require-dev": {
+        "symfony/form": "^6.0",
+        "symfony/security-http": "^6.0",
+        "symfony/http-foundation": "^6.0",
+        "symfony/validator": "^6.0",
+        "symfony/dependency-injection": "^6.0",
+        "symfony/routing": "^6.0",
+        "twig/twig": "^3.3"
+    }
+}
