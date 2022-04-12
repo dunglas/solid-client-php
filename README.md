@@ -9,6 +9,8 @@ conventions and tools for building *decentralized Web applications* based on
 This repository contains a PHP library for accessing data and managing permissions on data stored in a Solid Pod
 It also a contains a Symfony bundle to easily build Solid applications with the [Symfony](https://symfony.com) and [API Platform](https://api-platform.com) frameworks.
 
+Take a look at [the presentation of this library at the SymfonyLive Paris 2022 conference](https://dunglas.fr/2022/04/building-decentralized-web-apps-with-solid-and-php/).
+
 ## Install
 
 ```
