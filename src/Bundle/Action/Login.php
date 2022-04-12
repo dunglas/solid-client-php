@@ -10,7 +10,6 @@ use Dunglas\PhpSolidClient\Bundle\Security\SolidAuthenticator;
 use Dunglas\PhpSolidClient\OidcClient;
 use Dunglas\PhpSolidClient\Profile;
 use Dunglas\PhpSolidClient\SolidClientFactory;
-use mysql_xdevapi\Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
