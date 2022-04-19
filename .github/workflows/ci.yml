@@ -1,8 +1,32 @@
-name: "unit tests"
+name: ci
 
 on: ["pull_request", "push"]
 
 jobs:
+  php-cs-fixer:
+    name: PHP-cs-fixer (PHP ${{ matrix.php }})
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php:
+          - '8.1'
+      fail-fast: false
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          tools: php-cs-fixer, cs2pr
+
+      - name: Run PHP-CS-Fixer fix
+        run: php-cs-fixer fix --format=checkstyle | cs2pr
+
   tests:
     name: "tests"
 
@@ -27,7 +51,7 @@ jobs:
         with:
           php-version: "${{ matrix.php-version }}"
           ini-values: memory_limit=-1
-          tools: composer:v2, cs2pr
+          tools: composer:v2
 
       - name: "caching dependencies"
         uses: "actions/cache@v2"
