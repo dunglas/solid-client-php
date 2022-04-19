@@ -47,6 +47,7 @@
         "symfony/stopwatch": "^6.0",
         "symfony/phpunit-bridge": "^6.0",
         "symfony/browser-kit": "^6.0",
-        "symfony/css-selector": "^6.0"
+        "symfony/css-selector": "^6.0",
+        "symfony/security-core": "^6.0"
     }
 }
