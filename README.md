@@ -34,9 +34,9 @@ $solidClientFactory = new SolidClientFactory(HttpClient::create());
 // Create an anonymous Solid client
 $anonymousSolidClient = $solidClientFactory->create();
 
-// Fetch the WebID profile of an user
+// Fetch the WebID profile of a user
 $profile = $anonymousSolidClient->getProfile('https://example.com/your/webid');
-// Fetch the OIDC issuer for an user
+// Fetch the OIDC issuer for a user
 $oidcIssuer = $anonymousSolidClient->getOidcIssuer('https://example.com/your/webid');
 
 // Create a Solid OIDC client for this user

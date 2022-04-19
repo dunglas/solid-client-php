@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace Dunglas\PhpSolidClient\Bundle;
 
 use Dunglas\PhpSolidClient\Bundle\Security\SolidAuthenticator;
@@ -19,10 +18,9 @@ final class SolidClientFactory
     public function __construct(
         private readonly TokenStorageInterface $tokenStorage,
         private readonly BaseSolidClientFactory $baseSolidClientFactory,
-    )
-    {
+    ) {
     }
-    
+
     public function create(): SolidClient
     {
         $oidcClient = null;
@@ -30,7 +28,7 @@ final class SolidClientFactory
         if ($token && $token->hasAttribute(SolidAuthenticator::OIDC_CLIENT_KEY)) {
             $oidcClient = $token->getAttribute(SolidAuthenticator::OIDC_CLIENT_KEY);
         }
-        
+
         return $this->baseSolidClientFactory->create($oidcClient);
     }
 }
