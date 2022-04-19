@@ -20,11 +20,4 @@ class SmokeTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('h1', 'dunglas');
     }
-
-    protected static function createKernel(array $options = []): KernelInterface
-    {
-        require __DIR__.'/app/Kernel.php';
-
-        return new \Kernel('test', true);
-    }
 }

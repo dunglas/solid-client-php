@@ -14,8 +14,7 @@ declare(strict_types=1);
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\HttpFoundation\Request;
 
-require __DIR__.'/../../vendor/autoload.php';
-require __DIR__.'/Kernel.php';
+require __DIR__.'/bootstrap.php';
 
 $app = new Kernel('dev', true);
 
