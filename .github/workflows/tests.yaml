@@ -50,4 +50,11 @@ jobs:
         run: "php vendor/bin/simple-phpunit install"
 
       - name: "running tests"
+        if: ${{ matrix.dependencies == 'lowest' }}
+        env:
+          SYMFONY_DEPRECATIONS_HELPER: disabled=1
+        run: "php vendor/bin/simple-phpunit"
+
+      - name: "running tests"
+        if: ${{ matrix.dependencies == 'highest' }}
         run: "php vendor/bin/simple-phpunit"
