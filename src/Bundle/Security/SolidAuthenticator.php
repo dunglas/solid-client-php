@@ -62,11 +62,16 @@ final class SolidAuthenticator extends AbstractLoginFormAuthenticator
             $oidcClient = $request->getSession()->get(self::OIDC_CLIENT_KEY);
             $oidcClient->authenticate();
         } catch (\Exception $e) {
-            throw new CustomUserMessageAuthenticationException('Cannot finish the Solid OIDC login process.', [], $e->getCode(), $e);
+            throw new CustomUserMessageAuthenticationException('Cannot finish the Solid OIDC login process.', [], (int) $e->getCode(), $e);
         }
 
         $rawIdToken = $oidcClient->getIdToken();
-        $idToken = json_decode($oidcClient->decodeToken($rawIdToken)->getPayload(), true);
+        $payload = $oidcClient->decodeToken($rawIdToken)->getPayload();
+        if (null === $payload) {
+            throw new CustomUserMessageAccountStatusException('Invalid JWT: missing "webid" or "sub" claim');
+        }
+
+        $idToken = json_decode($payload, true, 512, \JSON_THROW_ON_ERROR);
         if (!($idToken['webid'] ?? $idToken['sub'] ?? false)) {
             throw new CustomUserMessageAccountStatusException('Invalid JWT: missing "webid" or "sub" claim');
         }

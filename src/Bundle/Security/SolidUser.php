@@ -44,7 +44,7 @@ final class SolidUser implements UserInterface, EquatableInterface
         return $user->getUserIdentifier() === $this->getUserIdentifier();
     }
 
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
     }
 }
