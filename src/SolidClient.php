@@ -19,43 +19,42 @@ final class SolidClient
     private const OIDC_ISSUER = 'http://www.w3.org/ns/solid/terms#oidcIssuer';
 
     public function __construct(
-       private readonly HttpClientInterface $httpClient,
-       private readonly ?OidcClient $oidcClient = null,
-   )
-   {
-   }
+        private readonly HttpClientInterface $httpClient,
+        private readonly ?OidcClient $oidcClient = null,
+    ) {
+    }
 
-   public function createContainer(string $parentUrl, string $name, ?string $data = null): ResponseInterface
-   {
-       return $this->post($parentUrl, $data, $name, true);
-   }
+    public function createContainer(string $parentUrl, string $name, ?string $data = null): ResponseInterface
+    {
+        return $this->post($parentUrl, $data, $name, true);
+    }
 
     /**
      * Creates a new resource by performing a Solid/LDP POST operation to a specified container.
      *
      * @see https://github.com/solid/solid-web-client/blob/main/src/client.js#L231=
      */
-   public function post(string $url, ?string $data = null, ?string $slug = null, bool $isContainer = false, array $options = []): ResponseInterface
-   {
-       if ($isContainer || !isset($options['headers']['Content-Type'])) {
-           $options['headers']['Content-Type'] = self::DEFAULT_MIME_TYPE;
-       }
-       if (null !== $data) {
-           $options['body'] = $data;
-       }
-       if (null !== $slug) {
-           $options['headers']['Slug'] = $slug;
-       }
+    public function post(string $url, ?string $data = null, ?string $slug = null, bool $isContainer = false, array $options = []): ResponseInterface
+    {
+        if ($isContainer || !isset($options['headers']['Content-Type'])) {
+            $options['headers']['Content-Type'] = self::DEFAULT_MIME_TYPE;
+        }
+        if (null !== $data) {
+            $options['body'] = $data;
+        }
+        if (null !== $slug) {
+            $options['headers']['Slug'] = $slug;
+        }
 
-       $options['headers']['Link'] = sprintf('<%s>; rel="type"', $isContainer ? self::LDP_BASIC_CONTAINER : self::LDP_RESOURCE);
+        $options['headers']['Link'] = sprintf('<%s>; rel="type"', $isContainer ? self::LDP_BASIC_CONTAINER : self::LDP_RESOURCE);
 
-       return $this->request('POST', $url, $options);
-   }
+        return $this->request('POST', $url, $options);
+    }
 
-   public function get(string $url, array $options = []): ResponseInterface
-   {
-       return $this->request('GET', $url, $options);
-   }
+    public function get(string $url, array $options = []): ResponseInterface
+    {
+        return $this->request('GET', $url, $options);
+    }
 
     public function request(string $method, string $url, array $options = []): ResponseInterface
     {
@@ -67,7 +66,8 @@ final class SolidClient
         return $this->httpClient->request($method, $url, $options);
     }
 
-    public function getProfile(string $webId, array $options = []): Graph {
+    public function getProfile(string $webId, array $options = []): Graph
+    {
         return new Graph($webId, $this->get($webId, $options)->getContent());
     }
 

@@ -55,7 +55,7 @@ final class OidcClient extends OpenIDConnectClient
     public function requestTokens($code, $headers = [])
     {
         $headers[] = 'DPoP: '.$this->createDPoP('POST', $this->getProviderConfigValue('token_endpoint'), false);
-        
+
         return parent::requestTokens($code, $headers);
     }
 

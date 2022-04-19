@@ -18,5 +18,5 @@ final class SolidClientFactory
     public function create(?OidcClient $oidcClient = null): SolidClient
     {
         return new SolidClient($this->httpClient, $oidcClient);
-   }
+    }
 }
