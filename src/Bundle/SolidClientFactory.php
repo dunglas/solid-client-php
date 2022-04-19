@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the Solid Client PHP project.
+ * (c) Kévin Dunglas <kevin@dunglas.fr>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
 namespace Dunglas\PhpSolidClient\Bundle;
@@ -8,7 +15,6 @@ use Dunglas\PhpSolidClient\Bundle\Security\SolidAuthenticator;
 use Dunglas\PhpSolidClient\SolidClient;
 use Dunglas\PhpSolidClient\SolidClientFactory as BaseSolidClientFactory;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Security;
 
 /**
  * @author Kévin Dunglas <kevin@dunglas.fr>

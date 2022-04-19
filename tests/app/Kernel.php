@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the Solid Client PHP project.
+ * (c) Kévin Dunglas <kevin@dunglas.fr>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 use Dunglas\PhpSolidClient\Bundle\DunglasSolidClientBundle;
 use Dunglas\PhpSolidClient\Bundle\Security\SolidAuthenticator;
 use Dunglas\PhpSolidClient\Bundle\Security\SolidUserProvider;
@@ -37,7 +44,6 @@ class Kernel extends BaseKernel
     protected function configureContainer(ContainerConfigurator $container): void
     {
         $frameworkConfig = [
-
             'secret' => 'demo',
             'session' => null,
             'profiler' => [
@@ -71,8 +77,8 @@ class Kernel extends BaseKernel
                     'custom_authenticators' => [SolidAuthenticator::class],
                     'logout' => [
                         'path' => 'app_logout',
-                    ]
-                ]
+                    ],
+                ],
             ],
         ]);
     }

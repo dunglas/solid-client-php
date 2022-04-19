@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the Solid Client PHP project.
+ * (c) Kévin Dunglas <kevin@dunglas.fr>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
 namespace Dunglas\PhpSolidClient;
@@ -89,7 +96,7 @@ final class OidcClient extends OpenIDConnectClient
         if ($includeAth) {
             $arrayPayload['ath'] = $this->base64urlEncode(hash('sha256', $this->getAccessToken()));
         }
-        $payload = json_encode($arrayPayload, JSON_THROW_ON_ERROR);
+        $payload = json_encode($arrayPayload, \JSON_THROW_ON_ERROR);
 
         $jws = $jwsBuilder
             ->create()
@@ -152,7 +159,7 @@ final class OidcClient extends OpenIDConnectClient
     protected function getProviderConfigValue($param, $default = null)
     {
         // Hack for compatibility with Solid Node Server
-        if ($param === 'code_challenge_methods_supported') {
+        if ('code_challenge_methods_supported' === $param) {
             return $default ?? ['S256'];
         }
 

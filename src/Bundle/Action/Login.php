@@ -1,16 +1,20 @@
 <?php
 
+/*
+ * This file is part of the Solid Client PHP project.
+ * (c) Kévin Dunglas <kevin@dunglas.fr>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
 namespace Dunglas\PhpSolidClient\Bundle\Action;
 
 use Dunglas\PhpSolidClient\Bundle\Form\SolidLoginType;
-use Dunglas\PhpSolidClient\Bundle\Form\WebIdLoginType;
 use Dunglas\PhpSolidClient\Bundle\Security\SolidAuthenticator;
 use Dunglas\PhpSolidClient\OidcClient;
-use Dunglas\PhpSolidClient\Profile;
 use Dunglas\PhpSolidClient\SolidClientFactory;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
