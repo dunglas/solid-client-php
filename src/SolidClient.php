@@ -75,7 +75,13 @@ final class SolidClient
 
     public function getProfile(string $webId, array $options = []): Graph
     {
-        return new Graph($webId, $this->get($webId, $options)->getContent());
+        $response = $this->get($webId, $options);
+        if (null !== $format = $response->getHeaders()['content-type'][0] ?? null) {
+            // strip parameters (such as charset) if any
+            $format = explode(';', $format, 2)[0];
+        }
+
+        return new Graph($webId, $response->getContent(), $format);
     }
 
     public function getOidcIssuer(string $webId, array $options = []): string

@@ -24,6 +24,6 @@ class SmokeTest extends WebTestCase
         $client->request('GET', '/kevin');
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'dunglas');
+        $this->assertSelectorTextContains('h1', 'https://id.inrupt.com/dunglas');
     }
 }

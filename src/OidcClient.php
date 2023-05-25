@@ -45,9 +45,7 @@ final class OidcClient extends OpenIDConnectClient
     public function authenticate(): bool
     {
         $this->setCodeChallengeMethod('S256');
-        $this->addScope('openid');
-        $this->addScope('webid');
-        $this->addScope('offline_access');
+        $this->addScope(['openid', 'webid', 'offline_access']);
 
         return parent::authenticate();
     }

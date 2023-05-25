@@ -49,6 +49,7 @@ class Kernel extends BaseKernel
             'profiler' => [
                 'only_exceptions' => false,
             ],
+            'http_method_override' => false,
         ];
 
         if ('test' === $this->environment) {
@@ -59,7 +60,6 @@ class Kernel extends BaseKernel
         $container->extension('framework', $frameworkConfig);
         $container->extension('web_profiler', ['toolbar' => true]);
         $container->extension('security', [
-            'enable_authenticator_manager' => true,
             'password_hashers' => [
                 PasswordAuthenticatedUserInterface::class => 'auto',
             ],
@@ -111,7 +111,7 @@ class Kernel extends BaseKernel
     {
         $client = $solidClientFactory->create();
 
-        $webId = 'https://pod.inrupt.com/dunglas/profile/card#me';
+        $webId = 'https://id.inrupt.com/dunglas';
         $profile = $client->getProfile($webId);
 
         return new Response($twig->render('kevin.html.twig', ['webId' => $webId, 'profile' => $profile]));
