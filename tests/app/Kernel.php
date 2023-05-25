@@ -14,6 +14,7 @@ use Dunglas\PhpSolidClient\Bundle\SolidClientFactory;
 use Symfony\Bundle\DebugBundle\DebugBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Bundle\SecurityBundle\SecurityBundle;
 use Symfony\Bundle\TwigBundle\TwigBundle;
 use Symfony\Bundle\WebProfilerBundle\WebProfilerBundle;
@@ -59,7 +60,7 @@ class Kernel extends BaseKernel
 
         $container->extension('framework', $frameworkConfig);
         $container->extension('web_profiler', ['toolbar' => true]);
-        $container->extension('security', [
+        $security = [
             'password_hashers' => [
                 PasswordAuthenticatedUserInterface::class => 'auto',
             ],
@@ -80,7 +81,13 @@ class Kernel extends BaseKernel
                     ],
                 ],
             ],
-        ]);
+        ];
+
+        if (!method_exists(Security::class, 'getFirewallConfig')) {
+            $security['enable_authenticator_manager'] = true;
+        }
+
+        $container->extension('security', $security);
     }
 
     protected function configureRoutes(RoutingConfigurator $routes): void
