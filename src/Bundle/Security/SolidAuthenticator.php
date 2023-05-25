@@ -45,10 +45,10 @@ final class SolidAuthenticator extends AbstractLoginFormAuthenticator
     public function supports(Request $request): bool
     {
         return
-            $request->getSession()->has(self::OIDC_CLIENT_KEY) &&
-                (
-                    $request->query->has('code') ||
-                    $request->query->has('error')
+            $request->getSession()->has(self::OIDC_CLIENT_KEY)
+                && (
+                    $request->query->has('code')
+                    || $request->query->has('error')
                 );
     }
 

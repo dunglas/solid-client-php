@@ -31,7 +31,7 @@ final class SolidClient
     ) {
     }
 
-    public function createContainer(string $parentUrl, string $name, ?string $data = null): ResponseInterface
+    public function createContainer(string $parentUrl, string $name, string $data = null): ResponseInterface
     {
         return $this->post($parentUrl, $data, $name, true);
     }
@@ -41,7 +41,7 @@ final class SolidClient
      *
      * @see https://github.com/solid/solid-web-client/blob/main/src/client.js#L231=
      */
-    public function post(string $url, ?string $data = null, ?string $slug = null, bool $isContainer = false, array $options = []): ResponseInterface
+    public function post(string $url, string $data = null, string $slug = null, bool $isContainer = false, array $options = []): ResponseInterface
     {
         if ($isContainer || !isset($options['headers']['Content-Type'])) {
             $options['headers']['Content-Type'] = self::DEFAULT_MIME_TYPE;

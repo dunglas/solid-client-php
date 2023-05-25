@@ -33,5 +33,5 @@ return static function (ContainerConfigurator $container): void {
         ->set(LogoutListener::class)
         ->set(SolidClientFactory::class)
         ->set(BundleSolidClientFactory::class)
-        ;
+    ;
 };
