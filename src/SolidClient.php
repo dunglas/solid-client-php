@@ -31,7 +31,7 @@ final class SolidClient
     ) {
     }
 
-    public function createContainer(string $parentUrl, string $name, ?string $data = null): ResponseInterface
+    public function createContainer(string $parentUrl, string $name, string $data = null): ResponseInterface
     {
         return $this->post($parentUrl, $data, $name, true);
     }
@@ -41,7 +41,7 @@ final class SolidClient
      *
      * @see https://github.com/solid/solid-web-client/blob/main/src/client.js#L231=
      */
-    public function post(string $url, ?string $data = null, ?string $slug = null, bool $isContainer = false, array $options = []): ResponseInterface
+    public function post(string $url, string $data = null, string $slug = null, bool $isContainer = false, array $options = []): ResponseInterface
     {
         if ($isContainer || !isset($options['headers']['Content-Type'])) {
             $options['headers']['Content-Type'] = self::DEFAULT_MIME_TYPE;
@@ -75,7 +75,13 @@ final class SolidClient
 
     public function getProfile(string $webId, array $options = []): Graph
     {
-        return new Graph($webId, $this->get($webId, $options)->getContent());
+        $response = $this->get($webId, $options);
+        if (null !== $format = $response->getHeaders()['content-type'][0] ?? null) {
+            // strip parameters (such as charset) if any
+            $format = explode(';', $format, 2)[0];
+        }
+
+        return new Graph($webId, $response->getContent(), $format);
     }
 
     public function getOidcIssuer(string $webId, array $options = []): string

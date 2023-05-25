@@ -1,6 +1,6 @@
 name: ci
 
-on: ["pull_request", "push"]
+on: ['pull_request', 'push']
 
 jobs:
   php-cs-fixer:
@@ -8,20 +8,14 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        php:
-          - '8.1'
-      fail-fast: false
-
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php }}
+          php-version: '8.2'
           tools: php-cs-fixer, cs2pr
 
       - name: Run PHP CS Fixer
@@ -32,20 +26,14 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        php:
-          - '8.1'
-      fail-fast: false
-
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php }}
+          php-version: '8.2'
           tools: composer
 
       - name: Run Composer
@@ -55,57 +43,59 @@ jobs:
         run: ./vendor/bin/psalm --output-format=github
 
   tests:
-    name: "tests"
+    name: tests
 
-    runs-on: ${{ matrix.operating-system }}
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
         dependencies:
-          - "lowest"
-          - "highest"
+          - lowest
+          - highest
         php-version:
-          - "8.1"
-        operating-system:
-          - "ubuntu-latest"
+          - '8.1'
+          - '8.2'
+        exclude:
+          - php-version: '8.1'
+            dependencies: lowest
 
     steps:
-      - name: "checkout"
-        uses: "actions/checkout@v2"
+      - name: checkout
+        uses: actions/checkout@v3
 
-      - name: "installing PHP"
-        uses: "shivammathur/setup-php@v2"
+      - name: installing PHP
+        uses: shivammathur/setup-php@v2
         with:
-          php-version: "${{ matrix.php-version }}"
+          php-version: ${{ matrix.php-version }}
           ini-values: memory_limit=-1
           tools: composer:v2
 
-      - name: "caching dependencies"
-        uses: "actions/cache@v2"
+      - name: caching dependencies
+        uses: actions/cache@v3
         with:
           path: |
             ~/.composer/cache
             vendor
-          key: "php-${{ matrix.php-version }}-${{ matrix.operating-system }}"
-          restore-keys: "php-${{ matrix.php-version }}-${{ matrix.operating-system }}"
+          key: php-${{ matrix.php-version }}-${{ matrix.operating-system }}
+          restore-keys: php-${{ matrix.php-version }}-${{ matrix.operating-system }}
 
-      - name: "installing lowest dependencies"
+      - name: installing lowest dependencies
         if: ${{ matrix.dependencies == 'lowest' }}
-        run: "composer update --prefer-lowest --no-interaction --no-progress"
+        run: composer update --prefer-lowest --no-interaction --no-progress
 
-      - name: "installing highest dependencies"
+      - name: installing highest dependencies
         if: ${{ matrix.dependencies == 'highest' }}
-        run: "composer update --no-interaction --no-progress"
+        run: composer update --no-interaction --no-progress
 
-      - name: "installing phpunit"
-        run: "php vendor/bin/simple-phpunit install"
+      - name: installing PHPUnit
+        run: php vendor/bin/simple-phpunit install
 
-      - name: "running tests"
+      - name: running tests
         if: ${{ matrix.dependencies == 'lowest' }}
         env:
           SYMFONY_DEPRECATIONS_HELPER: disabled=1
-        run: "php vendor/bin/simple-phpunit"
+        run: php vendor/bin/simple-phpunit
 
-      - name: "running tests"
+      - name: running tests
         if: ${{ matrix.dependencies == 'highest' }}
-        run: "php vendor/bin/simple-phpunit"
+        run: php vendor/bin/simple-phpunit

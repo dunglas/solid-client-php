@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Public profile of {{ profile.getLiteral(webId, '<http://xmlns.com/foaf/0.1/name>') }}</h1>
+    <h1>Public profile of {{ profile.uri }}</h1>
 
     {{ dump(profile) }}
 {% endblock %}

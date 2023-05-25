@@ -14,6 +14,7 @@ use Dunglas\PhpSolidClient\Bundle\SolidClientFactory;
 use Symfony\Bundle\DebugBundle\DebugBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Bundle\SecurityBundle\SecurityBundle;
 use Symfony\Bundle\TwigBundle\TwigBundle;
 use Symfony\Bundle\WebProfilerBundle\WebProfilerBundle;
@@ -49,6 +50,7 @@ class Kernel extends BaseKernel
             'profiler' => [
                 'only_exceptions' => false,
             ],
+            'http_method_override' => false,
         ];
 
         if ('test' === $this->environment) {
@@ -58,8 +60,7 @@ class Kernel extends BaseKernel
 
         $container->extension('framework', $frameworkConfig);
         $container->extension('web_profiler', ['toolbar' => true]);
-        $container->extension('security', [
-            'enable_authenticator_manager' => true,
+        $security = [
             'password_hashers' => [
                 PasswordAuthenticatedUserInterface::class => 'auto',
             ],
@@ -80,7 +81,13 @@ class Kernel extends BaseKernel
                     ],
                 ],
             ],
-        ]);
+        ];
+
+        if (!method_exists(Security::class, 'getFirewallConfig')) {
+            $security['enable_authenticator_manager'] = true;
+        }
+
+        $container->extension('security', $security);
     }
 
     protected function configureRoutes(RoutingConfigurator $routes): void
@@ -111,7 +118,7 @@ class Kernel extends BaseKernel
     {
         $client = $solidClientFactory->create();
 
-        $webId = 'https://pod.inrupt.com/dunglas/profile/card#me';
+        $webId = 'https://id.inrupt.com/dunglas';
         $profile = $client->getProfile($webId);
 
         return new Response($twig->render('kevin.html.twig', ['webId' => $webId, 'profile' => $profile]));
